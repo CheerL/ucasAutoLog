@@ -1,3 +1,4 @@
+#! /usr/bin/python3
 import os
 import sys
 import time
@@ -24,6 +25,7 @@ NO_USER = -2
 WAIT = -3
 OFFLINE = -4
 
+
 def get_name_list(filename):
     '从文件获取所有可登陆用户列表'
     try:
@@ -35,6 +37,7 @@ def get_name_list(filename):
         log.error(error)
         log.error('文件"%s"缺失' % filename)
         sys.exit()
+
 
 def login(userId):
     '登录'
@@ -53,7 +56,8 @@ def login(userId):
                 logout(POSTDATA)
                 return LOGIN_FAIL
 
-            log.info("目前登陆用户为:%s, 剩余流量:%s" % (DATA['userName'], DATA['maxFlow']))
+            log.info("目前登陆用户为:%s, 剩余流量:%s" %
+                     (DATA['userName'], DATA['maxFlow']))
             return LOGIN_SUCCESS
         else:
             return LOGIN_FAIL
@@ -63,12 +67,14 @@ def login(userId):
         log.error('登陆失败')
         return LOGIN_FAIL
 
+
 def logout(postData):
     '退出'
     try:
         url = BASE_URL + 'logout'
         postData['userIndex'] = DATA['userIndex']
-        requests.post(url=url, data=POSTDATA, timeout=TIME_OUT, headers=HEADERS)
+        requests.post(url=url, data=POSTDATA,
+                      timeout=TIME_OUT, headers=HEADERS)
         if not DATA['userName']:
             log.info('没有用户在线')
             return LOGOUT_FAIL
@@ -80,13 +86,14 @@ def logout(postData):
         log.error('未正常离线')
         return LOGOUT_FAIL
 
+
 def keep_alive(userIndex):
     '保活'
     try:
         url = BASE_URL + 'keepalive'
         POSTDATA['userIndex'] = userIndex
         if requests.post(url=url, data=POSTDATA, timeout=TIME_OUT, headers=HEADERS)\
-            .json().get('result') == "success":
+                .json().get('result') == "success":
             return KEEP_ALIVE_SUCCESS
         else:
             raise NotImplementedError()
@@ -95,6 +102,7 @@ def keep_alive(userIndex):
         log.error('保活失败')
         logout(POSTDATA)
         return KEEP_ALIVE_FAIL
+
 
 def test_online(userIndex):
     '测试是否在线'
@@ -105,9 +113,10 @@ def test_online(userIndex):
     try:
         url = BASE_URL + 'getOnlineUserInfo'
         POSTDATA['userIndex'] = userIndex
-        response = requests.get(url=url, headers=HEADERS, timeout=TIME_OUT).json()
+        response = requests.get(url=url, headers=HEADERS,
+                                timeout=TIME_OUT).json()
         result = response.get('result')
-        if  result == 'success':
+        if result == 'success':
             for key, _ in DATA.items():
                 DATA[key] = response.get(key)
             return ONLINE
@@ -119,6 +128,7 @@ def test_online(userIndex):
         log.error(error)
         log.error('网络连接异常')
         return NET_ERROR
+
 
 def net_error_react(userIndex):
     '网络异常时的操作'
@@ -136,10 +146,11 @@ def net_error_react(userIndex):
             log.info('程序暂时停止运行,一分钟后重新测试, 或者你可以重开该程序试试')
             log.info('若反复出现该状况,可能是学校网崩了╮(╯▽╰)╭')
             log.error('网络连接异常, 重试已达最大次数, 程序挂起')
-            time.sleep(60)
+            time.sleep(10)
             log.info('重新尝试连接')
             continue
     log.info('物理连接恢复')
+
 
 def main():
     '主函数'
@@ -148,10 +159,11 @@ def main():
     name_list = get_name_list('src/NameList.txt')
 
     while name_list:
-        # time.sleep(10)
+        time.sleep(10)
         test_result = test_online(DATA['userIndex'])
         if test_result is ONLINE or test_result is WAIT:
-            keep_alive(DATA['userIndex'])
+            # keep_alive(DATA['userIndex'])
+            pass
         elif test_result is NET_ERROR:
             net_error_react(DATA['userIndex'])
         elif test_result is NO_USER:
@@ -167,9 +179,11 @@ def main():
                     logout(POSTDATA)
                     clear(DATA)
                 if login(name) is LOGIN_FAIL:
-                    name_list.remove(name)
+                    # if len(name_list) > 10:
+                    #     name_list.remove(name)
                     name = random.choice(name_list)
                     log.info('切换用户')
+
 
 if __name__ == '__main__':
     main()
