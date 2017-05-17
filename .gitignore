@@ -5,8 +5,4 @@ icon/*
 *.ini
 *.pdf
 *.pid
-<<<<<<< HEAD
 */__pycache__/*
-=======
-*/__pycache__/*
->>>>>>> d542c6144a89ef10ba5788cef12a7a56a576b753
