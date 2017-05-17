@@ -1,7 +1,8 @@
 *.exe
 *.bat
 log
-*.txt
-!src/*.txt
-icon/
+icon/*
 *.ini
+*.pdf
+*.pid
+*/__pycache__/*
