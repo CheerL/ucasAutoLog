@@ -1,8 +1,6 @@
 *.exe
 *.bat
 log
-*.txt
-!src/*.txt
 icon/
 *.ini
 *.pdf
