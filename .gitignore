@@ -1,7 +1,8 @@
 *.exe
 *.bat
 log
-icon/
+icon/*
 *.ini
 *.pdf
-pid/
+*.pid
+__pycache__/*
