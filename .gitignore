@@ -5,4 +5,4 @@ icon/*
 *.ini
 *.pdf
 *.pid
-__pycache__/*
+*/__pycache__/*
