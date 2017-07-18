@@ -3,7 +3,7 @@ import os
 import sys
 import shutil
 
-from run import login, logout, get_name_list, log
+from run import login, logout, get_name_list, LOG
 from base import clear, DATA, EXCEPTIONS, POSTDATA, PATH, store_data
 
 
