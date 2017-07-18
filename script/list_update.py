@@ -89,8 +89,8 @@ def choose(num, out_label):
                     file_print(each[0], file_name, 1)
         return file_name
     except EXCEPTIONS as error:
-        log.error(error)
-        log.error('文件"success.txt"异常')
+        LOG.error(error)
+        LOG.error('文件"success.txt"异常')
         sys.exit()
 
 
@@ -122,7 +122,7 @@ def main():
         test_file('error.txt')
         test_file('retry.txt')
     except EXCEPTIONS as error:
-        log.error(error)
+        LOG.error(error)
         sys.exit()
 
     success_file = 'result/success.%s.txt' % (out_label)
