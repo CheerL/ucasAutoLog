@@ -31,13 +31,6 @@ def get_name_list_para(file_name):
     pl.run_process_pool(req_list, is_lock=True, limit_num=16)
 
 
-# def get_name_list(file_name):
-#     print(file_name)
-#     pdf = PdfFileReader(file_name)
-#     for page_num in range(pdf.getNumPages()):
-#         read_pdf_page(pdf, page_num)
-
-
 def main():
     global NAME_LIST
 
@@ -56,12 +49,14 @@ def main():
     store_data(FILE_NAME, NAME_LIST)
 
 
-def time_it(num=5):
-    '测试程序用时'
-    import timeit
-    print(timeit.timeit('main()', 'from __main__ import main', number=num) / num)
+# def time_it(num=5):
+#     '测试程序用时'
+#     import timeit
+#     print(timeit.timeit('main()', 'from __main__ import main', number=num) / num)
 
 
 if __name__ == '__main__':
-    # main()
-    time_it(1)
+    # time_it(1)
+    num = 1
+    import timeit
+    print(timeit.timeit('main()', 'from __main__ import main', number=num) / num)
