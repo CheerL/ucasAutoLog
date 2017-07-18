@@ -3,10 +3,11 @@ import sys
 import os
 import time
 
+
 def getPath():
     try:
         if os.path.isfile('C:\\config') is True:
-            file = open('C:\\config','r')
+            file = open('C:\\config', 'r')
             Path = file.readline()
             file.close()
         else:
@@ -15,6 +16,7 @@ def getPath():
         os.system('echo Error.&echo 请重新运行安装程序"install.exe".&pause')
         sys.exit()
     return Path
+
 
 Path = getPath()
 os.chdir(Path)
@@ -35,7 +37,3 @@ while True:
         os.system('echo Error.&echo 请重新运行"autoLogin.exe".')
         os.system('关闭程序.bat')
         sys.exit()
-        
-        
-    
-    

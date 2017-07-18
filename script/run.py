@@ -4,8 +4,9 @@ import sys
 import time
 import random
 import requests
-from base import POSTDATA_LOGIN, POSTDATA, PATH, DATA, HEADERS, LOG_PATH, BASE_URL, TIME_OUT, EXCEPTIONS
-from base import get_logger, clear
+from . import POSTDATA_LOGIN, POSTDATA, PATH, DATA, HEADERS, LOG_PATH, BASE_URL, TIME_OUT, EXCEPTIONS
+from . import get_logger, clear
+
 
 log = get_logger('auto_login', LOG_PATH)
 
@@ -39,11 +40,11 @@ def get_name_list(filename):
         sys.exit()
 
 
-def login(userId):
+def login(user_id):
     '登录'
     try:
         url = BASE_URL + 'login'
-        POSTDATA_LOGIN['userId'] = userId
+        POSTDATA_LOGIN['userId'] = user_id
         response = requests.post(
             url=url, data=POSTDATA_LOGIN, timeout=TIME_OUT, headers=HEADERS).json()
         DATA['result'] = response.get('result')
@@ -68,11 +69,11 @@ def login(userId):
         return LOGIN_FAIL
 
 
-def logout(postData):
+def logout(post_data):
     '退出'
     try:
         url = BASE_URL + 'logout'
-        postData['userIndex'] = DATA['userIndex']
+        post_data['userIndex'] = DATA['userIndex']
         requests.post(url=url, data=POSTDATA,
                       timeout=TIME_OUT, headers=HEADERS)
         if not DATA['userName']:
@@ -87,11 +88,11 @@ def logout(postData):
         return LOGOUT_FAIL
 
 
-def keep_alive(userIndex):
+def keep_alive(user_index):
     '保活'
     try:
         url = BASE_URL + 'keepalive'
-        POSTDATA['userIndex'] = userIndex
+        POSTDATA['userIndex'] = user_index
         if requests.post(url=url, data=POSTDATA, timeout=TIME_OUT, headers=HEADERS)\
                 .json().get('result') == "success":
             return KEEP_ALIVE_SUCCESS
@@ -104,15 +105,15 @@ def keep_alive(userIndex):
         return KEEP_ALIVE_FAIL
 
 
-def test_online(userIndex):
+def test_online(user_index):
     '测试是否在线'
-    if not userIndex:
+    if not user_index:
         log.info('用户不存在')
         return NO_USER
 
     try:
         url = BASE_URL + 'getOnlineUserInfo'
-        POSTDATA['userIndex'] = userIndex
+        POSTDATA['userIndex'] = user_index
         response = requests.get(url=url, headers=HEADERS,
                                 timeout=TIME_OUT).json()
         result = response.get('result')
@@ -130,10 +131,10 @@ def test_online(userIndex):
         return NET_ERROR
 
 
-def net_error_react(userIndex):
+def net_error_react(user_index):
     '网络异常时的操作'
     count = 0
-    while test_online(userIndex) is NET_ERROR:
+    while test_online(user_index) is NET_ERROR:
         if count < 3:
             log.info('网络连接已断开,请检查网线或wifi是否正常')
             time.sleep(5)

@@ -3,7 +3,7 @@ import os
 import requests
 from pypinyin import lazy_pinyin
 from bs4 import BeautifulSoup as Bs
-from base import HEADERS, PATH, store_data
+from . import HEADERS, PATH, store_data
 
 BASE_URL = 'http://www.ucas.ac.cn/site/'
 URL_NUM_LIST = [74, 232, 75, 76, 77, 78]

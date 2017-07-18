@@ -4,34 +4,39 @@ import time
 import subprocess
 import platform
 
+
 def isfile(filename):
     return os.path.isfile(filename)
 
-def hideFile(path,model=True):
+
+def hideFile(path, model=True):
     if 'Windows' in platform.system():
         if model is True:
-            cmd = os.popen('attrib +h "' + path +'"')
+            cmd = os.popen('attrib +h "' + path + '"')
         if model is False:
-            cmd = os.popen('attrib -h "' + path +'"')
+            cmd = os.popen('attrib -h "' + path + '"')
         cmd.close()
         time.sleep(1)
+
+
 def setVersion(ver):
     if os.path.isfile('config') is True:
-        hideFile('config',False)
-    config = open('config','w+')
+        hideFile('config', False)
+    config = open('config', 'w+')
     config.write(ver)
     config.close()
-    hideFile('config',True)
+    hideFile('config', True)
+
 
 print('开始安装.\n')
 
 print('--------------------\n\nStep 1\n检测文件完整性.\n')
-FileList = {'uninstall.bat','main.exe','src\\NameList.txt',
-            'autoLogin.exe','设置自动启动.bat','清理日志.bat','关闭程序.bat',
-            'src\\OriginalNameList.txt','listUpdate.exe'}
+FileList = {'uninstall.bat', 'main.exe', 'src\\NameList.txt',
+            'autoLogin.exe', '设置自动启动.bat', '清理日志.bat', '关闭程序.bat',
+            'src\\OriginalNameList.txt', 'listUpdate.exe'}
 for each in FileList:
     if isfile(each) is False:
-        os.system("echo 安装失败.&echo 文件 "+each+" 缺失.&pause")
+        os.system("echo 安装失败.&echo 文件 " + each + " 缺失.&pause")
         sys.exit()
 time.sleep(1)
 print('Success.\n\n--------------------\n')
@@ -42,14 +47,14 @@ print('Step 2\n设置运行路径.\n')
 try:
     if os.path.isfile('C:\\config'):
         os.remove('C:\\config')
-    file = open('C:\\config','w+')
+    file = open('C:\\config', 'w+')
     file.write(os.getcwd())
     file.close()
-    hideFile('C:\\config',True)
+    hideFile('C:\\config', True)
 except:
     os.system("echo Error.&echo 请尝试以管理员身份运行.&pause")
     sys.exit()
-    
+
 time.sleep(1)
 print('Success.\n\n--------------------\n')
 

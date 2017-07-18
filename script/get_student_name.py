@@ -3,7 +3,7 @@ import re
 import threading
 import parallel as pl
 from PyPDF2.pdf import PdfFileReader
-from base import PATH, store_data
+from . import PATH, store_data
 
 ID_PATTERN = re.compile(r'201\d[12E]\d{10}')
 FILE_NAME = os.path.join(PATH, 'src', 'AllStudentNameList.txt')
