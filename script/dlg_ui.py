@@ -44,7 +44,7 @@ class Ui_Dialog(object):
         self.verticalLayout.addWidget(self.label_3)
 
         self.retranslateUi(Dialog)
-        self.cancel_button.clicked.connect(Dialog.reject)
+        self.cancel_button.clicked.connect(Dialog.close)
         self.full_update_button.clicked.connect(Dialog.full_update)
         self.fast_update_button.clicked.connect(Dialog.fast_update)
         QtCore.QMetaObject.connectSlotsByName(Dialog)

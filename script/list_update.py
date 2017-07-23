@@ -56,11 +56,19 @@ def test_name(name):
 
 def test_file(file):
     '对某个文件进行测试'
-    for name in get_name_list(file):
+    name_list = get_name_list(file)
+    if STATUS.UPDATE:
+        if not STATUS.UPDATE_ALL:
+            STATUS.UPDATE_ALL = len(name_list)
+            STATUS.UPDATE_NOW = 0
+        else:
+            STATUS.UPDATE_ALL += len(name_list)
+    for name in name_list:
         if file != 'NameList.txt':
             name = name.split('\t')[0]
         test_name(name)
         clear(DATA)
+        STATUS.UPDATE_NOW += 1
 
 
 def choose(num, out_label):
@@ -76,7 +84,7 @@ def choose(num, out_label):
             name_list = get_name_list('success.txt')
         else:
             print('所有账号都没有流量了, GG')
-            sys.exit()
+            return
     else:
         print('文件"success.txt"不存在, 请重新进行测试')
         raise FileExistsError
@@ -91,26 +99,24 @@ def choose(num, out_label):
     except EXCEPTIONS as error:
         LOG.error(error)
         LOG.error('文件"success.txt"异常')
-        sys.exit()
+        return
 
 
 def update(out_label='fast'):
     os.chdir(os.path.join(PATH, 'src'))
     try:
         init()
-
         if out_label == 'fast':
             test_file('FastNameList.txt')
 
         elif out_label == 'full':
             test_file('AllNameList.txt')
-            test_file('AllStudentNameList.txt')
 
         test_file('error.txt')
         test_file('retry.txt')
     except EXCEPTIONS as error:
         LOG.error(error)
-        sys.exit()
+        return
 
     success_file = 'result/success.%s.txt' % (out_label)
     file_name = choose(0, out_label)
@@ -125,10 +131,15 @@ def update(out_label='fast'):
         with open('NameList.txt', 'w+'):
             pass
 
-    shutil.copy('success.txt', success_file)
-    shutil.copy(file_name, 'NameList.txt')
-    os.remove(file_name)
-    os.remove(success_file)
+    if file_name:
+        shutil.copy('success.txt', success_file)
+        shutil.copy(file_name, 'NameList.txt')
+        os.remove(file_name)
+        os.remove(success_file)
+
+    STATUS.UPDATE = None
+    STATUS.UPDATE_ALL = 0
+    STATUS.UPDATE_NOW = 0
 
 
 def main():
@@ -172,6 +183,8 @@ def main():
         num = 0
 
     file_name = choose(num, out_label)
+    if not file_name:
+        sys.exit()
     print('筛选完毕')
 
     # if str(input('按1清理生成的临时文件, 按任意其他键跳过\n')) is '1':

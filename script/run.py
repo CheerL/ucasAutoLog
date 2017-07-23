@@ -41,7 +41,7 @@ def get_name_list(filename):
     except EXCEPTIONS as error:
         LOG.error(error)
         LOG.error('文件"%s"缺失' % filename)
-        sys.exit()
+        return
 
 
 def login(user_id):
@@ -192,6 +192,7 @@ def main():
                     name = random.choice(name_list)
                     LOG.info('切换用户')
 
+    STATUS.RUN = False
 
 if __name__ == '__main__':
     main()

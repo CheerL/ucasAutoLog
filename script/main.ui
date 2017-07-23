@@ -252,8 +252,8 @@
    <slot>stop_auto_login()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>245</x>
-     <y>324</y>
+     <x>248</x>
+     <y>347</y>
     </hint>
     <hint type="destinationlabel">
      <x>403</x>

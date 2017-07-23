@@ -5,7 +5,7 @@ import logging
 PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOG_PATH = os.path.join(PATH, 'log')
 BASE_URL = 'http://210.77.16.21/eportal/InterFace.do?method='
-TIME_OUT = 5
+TIME_OUT = 0
 EXCEPTIONS = (
     AttributeError, IOError, NotImplementedError,
     TimeoutError, IndexError, ConnectionError, FileExistsError,
@@ -67,11 +67,15 @@ def store_data(file_name, data, endwith='\n'):
 class Status(object):
     GUI = False
     MAIN = None
+    UPDATE = None
+    UPDATE_DLG = None
 
     _LOGIN = False
     _RUN = False
     _USER = ''
     _FLOW = ''
+    _UPDATE_ALL = 0
+    _UPDATE_NOW = 0
 
     @property
     def LOGIN(self):
@@ -88,6 +92,14 @@ class Status(object):
     @property
     def FLOW(self):
         return self._FLOW
+
+    @property
+    def UPDATE_ALL(self):
+        return self._UPDATE_ALL
+
+    @property
+    def UPDATE_NOW(self):
+        return self._UPDATE_NOW
 
     @LOGIN.setter
     def LOGIN(self, value):
@@ -112,6 +124,19 @@ class Status(object):
         self._FLOW = value
         if self.GUI and self.MAIN:
             self.MAIN.info_update()
+
+    @UPDATE_ALL.setter
+    def UPDATE_ALL(self, value):
+        self._UPDATE_ALL = value
+        if self.UPDATE:
+            self.UPDATE.all.setText(str(self._UPDATE_ALL))
+
+    @UPDATE_NOW.setter
+    def UPDATE_NOW(self, value):
+        self._UPDATE_NOW = value
+        if self.UPDATE:
+            self.UPDATE.now.setText(str(self._UPDATE_NOW))
+
 
 
 STATUS = Status()

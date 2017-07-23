@@ -22,7 +22,7 @@
      <height>31</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QHBoxLayout" name="buttons_layout">
     <item>
      <widget class="QPushButton" name="fast_update_button">
       <property name="text">
@@ -55,7 +55,7 @@
      <height>61</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="text_layout">
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
@@ -86,7 +86,7 @@
    <sender>cancel_button</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
-   <slot>reject()</slot>
+   <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>276</x>
@@ -105,8 +105,8 @@
    <slot>full_update()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>114</x>
-     <y>113</y>
+     <x>195</x>
+     <y>93</y>
     </hint>
     <hint type="destinationlabel">
      <x>75</x>
@@ -121,8 +121,8 @@
    <slot>fast_update()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>182</x>
-     <y>113</y>
+     <x>101</x>
+     <y>93</y>
     </hint>
     <hint type="destinationlabel">
      <x>207</x>
