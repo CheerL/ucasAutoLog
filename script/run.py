@@ -4,11 +4,10 @@ import sys
 import time
 import random
 import requests
-from base import POSTDATA_LOGIN, POSTDATA, PATH, DATA, HEADERS, LOG_PATH, BASE_URL, TIME_OUT, EXCEPTIONS
-from base import get_logger, clear
 
+from base import POSTDATA_LOGIN, POSTDATA, PATH, DATA, HEADERS, BASE_URL, TIME_OUT, EXCEPTIONS
+from base import STATUS, LOG, clear
 
-LOG = get_logger('auto_login', LOG_PATH)
 
 # 登陆常量
 LOGIN_SUCCESS = 0
@@ -26,6 +25,11 @@ NO_USER = -2
 WAIT = -3
 OFFLINE = -4
 
+
+def status_change(_login, _user='', _flow=''):
+    STATUS.LOGIN = _login
+    STATUS.USER = _user
+    STATUS.FLOW = _flow
 
 def get_name_list(filename):
     '从文件获取所有可登陆用户列表'
@@ -109,6 +113,7 @@ def test_online(user_index):
     '测试是否在线'
     if not user_index:
         LOG.info('用户不存在')
+        status_change(False)
         return NO_USER
 
     try:
@@ -120,14 +125,17 @@ def test_online(user_index):
         if result == 'success':
             for key, _ in DATA.items():
                 DATA[key] = response.get(key)
+            status_change(True, DATA['userName'], DATA['maxFlow'])
             return ONLINE
         elif result == 'wait':
             return WAIT
         else:
+            status_change(False)
             return OFFLINE
     except EXCEPTIONS as error:
         LOG.error(error)
         LOG.error('网络连接异常')
+        status_change(False)
         return NET_ERROR
 
 
@@ -163,7 +171,6 @@ def main():
         time.sleep(10)
         test_result = test_online(DATA['userIndex'])
         if test_result is ONLINE or test_result is WAIT:
-            # keep_alive(DATA['userIndex'])
             pass
         elif test_result is NET_ERROR:
             net_error_react(DATA['userIndex'])

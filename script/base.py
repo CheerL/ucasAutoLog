@@ -62,3 +62,57 @@ def store_data(file_name, data, endwith='\n'):
     write_data = [each + endwith for each in data]
     with open(file_name, 'w') as file:
         file.writelines(write_data)
+
+
+class Status(object):
+    GUI = False
+    MAIN = None
+
+    _LOGIN = False
+    _RUN = False
+    _USER = ''
+    _FLOW = ''
+
+    @property
+    def LOGIN(self):
+        return self._LOGIN
+
+    @property
+    def RUN(self):
+        return self._RUN
+
+    @property
+    def USER(self):
+        return self._USER
+
+    @property
+    def FLOW(self):
+        return self._FLOW
+
+    @LOGIN.setter
+    def LOGIN(self, value):
+        self._LOGIN = value
+        if self.GUI and self.MAIN:
+            self.MAIN.info_update()
+
+    @RUN.setter
+    def RUN(self, value):
+        self._RUN = value
+        if self.GUI and self.MAIN:
+            self.MAIN.info_update()
+
+    @USER.setter
+    def USER(self, value):
+        self._USER = value
+        if self.GUI and self.MAIN:
+            self.MAIN.info_update()
+
+    @FLOW.setter
+    def FLOW(self, value):
+        self._FLOW = value
+        if self.GUI and self.MAIN:
+            self.MAIN.info_update()
+
+
+STATUS = Status()
+LOG = get_logger('auto_login', LOG_PATH)

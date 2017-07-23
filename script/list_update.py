@@ -3,8 +3,8 @@ import os
 import sys
 import shutil
 
-from run import login, logout, get_name_list, LOG
-from base import clear, DATA, EXCEPTIONS, POSTDATA, PATH, store_data
+from run import login, logout, get_name_list
+from base import clear, store_data, DATA, EXCEPTIONS, POSTDATA, PATH, LOG, STATUS
 
 
 def init(success=True):
@@ -92,6 +92,43 @@ def choose(num, out_label):
         LOG.error(error)
         LOG.error('文件"success.txt"异常')
         sys.exit()
+
+
+def update(out_label='fast'):
+    os.chdir(os.path.join(PATH, 'src'))
+    try:
+        init()
+
+        if out_label == 'fast':
+            test_file('FastNameList.txt')
+
+        elif out_label == 'full':
+            test_file('AllNameList.txt')
+            test_file('AllStudentNameList.txt')
+
+        test_file('error.txt')
+        test_file('retry.txt')
+    except EXCEPTIONS as error:
+        LOG.error(error)
+        sys.exit()
+
+    success_file = 'result/success.%s.txt' % (out_label)
+    file_name = choose(0, out_label)
+
+    if os.path.isfile('error.txt'):
+        os.remove('error.txt')
+    if os.path.isfile('retry.txt'):
+        os.remove('retry.txt')
+    if os.path.isfile('fail.txt'):
+        os.remove('fail.txt')
+    if os.path.isfile('NameList.txt'):
+        with open('NameList.txt', 'w+'):
+            pass
+
+    shutil.copy('success.txt', success_file)
+    shutil.copy(file_name, 'NameList.txt')
+    os.remove(file_name)
+    os.remove(success_file)
 
 
 def main():
