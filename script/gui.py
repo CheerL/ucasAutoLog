@@ -3,9 +3,9 @@ import os
 import parallel as pl
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QMessageBox, QWidget
 from PyQt5.QtCore import QBasicTimer
-from main_ui import Ui_MainWindow
-from dlg_ui import Ui_Dialog
-from pro_ui import Ui_Dialog as Ui_pro
+from ui.main_ui import Ui_MainWindow
+from ui.dlg_ui import Ui_Dialog
+from ui.pro_ui import Ui_Dialog as Ui_pro
 from base import PATH, STATUS
 from run import main as auto_login
 from list_update import update
