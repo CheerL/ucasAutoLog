@@ -150,7 +150,7 @@ def main():
         print('是否跳过流量测试?')
         print('一般在你最近已经测试过, 且在该文件夹下有一个非空的名为"success.txt"的文件时选择跳过')
         print('完整测试时间可能较久,请耐心等待')
-        user_input = input('按0快速测试, 按1测试老师, 按2测试学生, 按任意其他键跳过测试\n')
+        user_input = input('按0快速测试, 按1完整测试, 按任意其他键跳过测试\n')
         if str(user_input) == '0':
             init()
             test_file('FastNameList.txt')
@@ -158,11 +158,7 @@ def main():
         elif str(user_input) == '1':
             init()
             test_file('AllNameList.txt')
-            out_label = 'teacher'
-        elif str(user_input) == '2':
-            init()
-            test_file('AllStudentNameList.txt')
-            out_label = 'student'
+            out_label = 'full'
         else:
             init(success=False)
             out_label = 'pass'
@@ -187,7 +183,6 @@ def main():
         sys.exit()
     print('筛选完毕')
 
-    # if str(input('按1清理生成的临时文件, 按任意其他键跳过\n')) is '1':
     if os.path.isfile('error.txt'):
         os.remove('error.txt')
     if os.path.isfile('retry.txt'):
@@ -199,23 +194,9 @@ def main():
             pass
 
     shutil.copy('success.txt', success_file)
-
-    if out_label in ['fast', 'pass']:
-        shutil.copy(file_name, 'NameList.txt')
-        os.remove(file_name)
-        os.remove(success_file)
-    elif out_label in ['teacher', 'student']:
-        content = []
-        for each in ['teacher', 'student']:
-            file_each = 'result/%dMB.%s.txt' % (num, each)
-            if not os.path.exists(file_each):
-                with open(file_each, 'w+'):
-                    print('不存在%s, 建议再测试一次' % (file_each.split('/')[1]))
-            with open(file_each, 'r') as file:
-                content += file.readlines()
-
-        store_data('NameList.txt', content, '')
-        shutil.copy('NameList.txt', 'FastNameList.txt')
+    shutil.copy(file_name, 'NameList.txt')
+    os.remove(file_name)
+    os.remove(success_file)
 
     print('更新完毕')
     input('按任意键退出')

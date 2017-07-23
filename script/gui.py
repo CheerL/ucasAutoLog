@@ -25,11 +25,13 @@ class Main_window(QMainWindow):
 
     def run_auto_login(self):
         STATUS.RUN = True
-        pl.run_thread([(auto_login, ())], name='__auto_run', is_lock=False)
+        pl.run_thread([(auto_login, ())], name='auto_run', is_lock=False)
+        QMessageBox.information(self, '提示', '程序开始运行', QMessageBox.Yes)
 
     def stop_auto_login(self):
         STATUS.RUN = False
-        pl.kill_thread(name='__auto_run')
+        pl.kill_thread(name='auto_run')
+        QMessageBox.information(self, '提示', '程序停止运行', QMessageBox.Yes)
 
     def list_update(self):
         self.update_dlg = Update_dlg()
@@ -54,6 +56,7 @@ class Main_window(QMainWindow):
         self.new.flow_label.setText(STATUS.FLOW)
         self.new.login_status_label.setText('在线' if STATUS.LOGIN else '离线')
         self.new.run_status_label.setText('运行中' if STATUS.RUN else '未运行')
+        print(STATUS.RUN)
 
     def show_update_result(self):
         title = '更新结果'
