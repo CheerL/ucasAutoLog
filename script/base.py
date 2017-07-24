@@ -5,7 +5,7 @@ import logging
 PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOG_PATH = os.path.join(PATH, 'log')
 BASE_URL = 'http://210.77.16.21/eportal/InterFace.do?method='
-TIME_OUT = 0
+TIME_OUT = 5
 EXCEPTIONS = (
     AttributeError, IOError, NotImplementedError,
     TimeoutError, IndexError, ConnectionError, FileExistsError,
