@@ -16,17 +16,17 @@ from list_update import update
 class Main_window(QMainWindow):
     def __init__(self):
         super(Main_window, self).__init__()
+        self.icon_path = os.path.join(PATH, 'script', 'ui', 'icon.ico')
         self.new = Ui_MainWindow()
         self.new.setupUi(self)
         STATUS.GUI = True
         STATUS.MAIN = self
+        self.setWindowIcon(QIcon(self.icon_path))
         self.new.user_info_table.setColumnWidth(0, 180)
         self.new.user_info_table.setColumnWidth(1, 150)
         self.user_info_table_update()
         self.info_update()
-        icon_path = os.path.join(PATH, 'script', 'ui', 'icon.ico')
-        self.tray_icon = TrayIcon(self, icon_path)
-        self.tray_icon.show()
+        self.tray_icon = TrayIcon(self, self.icon_path)
 
     def run_auto_login(self):
         STATUS.RUN = True
@@ -140,6 +140,7 @@ class TrayIcon(QSystemTrayIcon):
         self.activated.connect(self.iconClied)
         self.setIcon(QIcon(self.icon_path))
         self.icon = self.MessageIcon()
+        self.show()
 
     def showMenu(self):
         "设计托盘的菜单，这里我实现了一个二级菜单"
