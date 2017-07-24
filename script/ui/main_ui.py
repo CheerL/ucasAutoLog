@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\script\main.ui'
+# Form implementation generated from reading ui file '.\script\ui\main.ui'
 #
 # Created by: PyQt5 UI code generator 5.9
 #
@@ -34,6 +34,9 @@ class Ui_MainWindow(object):
         self.stop_button = QtWidgets.QPushButton(self.verticalLayoutWidget_2)
         self.stop_button.setObjectName("stop_button")
         self.verticalLayout_2.addWidget(self.stop_button)
+        self.pushButton = QtWidgets.QPushButton(self.verticalLayoutWidget_2)
+        self.pushButton.setObjectName("pushButton")
+        self.verticalLayout_2.addWidget(self.pushButton)
         self.quit_button = QtWidgets.QPushButton(self.verticalLayoutWidget_2)
         self.quit_button.setObjectName("quit_button")
         self.verticalLayout_2.addWidget(self.quit_button)
@@ -98,6 +101,7 @@ class Ui_MainWindow(object):
         self.run_button.clicked.connect(MainWindow.run_auto_login)
         self.user_list_update_button.clicked.connect(MainWindow.list_update)
         self.stop_button.clicked.connect(MainWindow.stop_auto_login)
+        self.pushButton.clicked.connect(MainWindow.minimize)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -105,6 +109,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "UCAS 校园网自动登陆"))
         self.run_button.setText(_translate("MainWindow", "开始运行"))
         self.stop_button.setText(_translate("MainWindow", "停止运行"))
+        self.pushButton.setText(_translate("MainWindow", "最小化到托盘"))
         self.quit_button.setText(_translate("MainWindow", "退出程序"))
         self.label_3.setText(_translate("MainWindow", "当前用户"))
         self.label_6.setText(_translate("MainWindow", "剩余流量"))

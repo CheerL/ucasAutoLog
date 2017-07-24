@@ -1,8 +1,10 @@
 import sys
 import os
 import parallel as pl
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QMessageBox, QWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
+from PyQt5.QtWidgets import QMessageBox, QWidget, QSystemTrayIcon, QMenu, QAction
 from PyQt5.QtCore import QBasicTimer
+from PyQt5.QtGui import QIcon
 from ui.main_ui import Ui_MainWindow
 from ui.dlg_ui import Ui_Dialog
 from ui.pro_ui import Ui_Dialog as Ui_pro
@@ -22,6 +24,9 @@ class Main_window(QMainWindow):
         self.new.user_info_table.setColumnWidth(1, 150)
         self.user_info_table_update()
         self.info_update()
+        icon_path = os.path.join(PATH, 'script', 'ui', 'icon.ico')
+        self.tray_icon = TrayIcon(self, icon_path)
+        self.tray_icon.show()
 
     def run_auto_login(self):
         STATUS.RUN = True
@@ -61,6 +66,10 @@ class Main_window(QMainWindow):
         title = '更新结果'
         msg = '更新完毕， 共有%s个可用账号' % self.num
         QMessageBox.information(self, title, msg, QMessageBox.Yes)
+
+    def minimize(self):
+        if self.isVisible:
+            self.hide()
 
 
 class Update_dlg(QWidget):
@@ -123,6 +132,36 @@ class Update_pro(QWidget):
             self.main.btn.setText('完成')
             self.timer.stop()
 
+class TrayIcon(QSystemTrayIcon):
+    def __init__(self, parent=None, icon_path=''):
+        super(TrayIcon, self).__init__(parent)
+        self.icon_path = icon_path
+        self.showMenu()
+        self.activated.connect(self.iconClied)
+        self.setIcon(QIcon(self.icon_path))
+        self.icon = self.MessageIcon()
+
+    def showMenu(self):
+        "设计托盘的菜单，这里我实现了一个二级菜单"
+        self.menu = QMenu()
+        self.quitAction = QAction("退出", self, triggered=self.quit)
+        self.menu.addAction(self.quitAction)
+        self.setContextMenu(self.menu)
+
+    def iconClied(self, reason):
+        "鼠标点击icon传递的信号会带有一个整形的值，1是表示单击右键，2是双击，3是单击左键，4是用鼠标中键点击"
+        if reason == 2 or reason == 3:
+            print(type(reason))
+            pw = self.parent()
+            if pw.isVisible():
+                pw.hide()
+            else:
+                pw.show()
+
+    def quit(self):
+        "保险起见，为了完整的退出"
+        self.setVisible(False)
+        self.parent().close()
 
 def main():
     app = QApplication(sys.argv)

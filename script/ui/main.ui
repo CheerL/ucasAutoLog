@@ -64,6 +64,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>最小化到托盘</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="quit_button">
          <property name="text">
           <string>退出程序</string>
@@ -204,8 +211,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>206</x>
-     <y>362</y>
+     <x>209</x>
+     <y>391</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
@@ -252,12 +259,28 @@
    <slot>stop_auto_login()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>347</y>
+     <x>251</x>
+     <y>333</y>
     </hint>
     <hint type="destinationlabel">
      <x>403</x>
      <y>309</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>minimize()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>218</x>
+     <y>355</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>402</x>
+     <y>368</y>
     </hint>
    </hints>
   </connection>
@@ -268,5 +291,6 @@
   <slot>swich_user()</slot>
   <slot>list_update()</slot>
   <slot>info_update()</slot>
+  <slot>minimize()</slot>
  </slots>
 </ui>
