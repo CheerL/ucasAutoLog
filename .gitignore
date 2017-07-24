@@ -7,3 +7,6 @@ icon/*
 *.pid
 */__pycache__/*
 .vscode/*
+dist/*
+build/*
+bin/*

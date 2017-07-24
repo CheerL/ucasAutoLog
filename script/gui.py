@@ -56,7 +56,6 @@ class Main_window(QMainWindow):
         self.new.flow_label.setText(STATUS.FLOW)
         self.new.login_status_label.setText('在线' if STATUS.LOGIN else '离线')
         self.new.run_status_label.setText('运行中' if STATUS.RUN else '未运行')
-        print(STATUS.RUN)
 
     def show_update_result(self):
         title = '更新结果'
