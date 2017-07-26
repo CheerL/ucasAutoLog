@@ -15,10 +15,10 @@ EXCEPTIONS = (
 POSTDATA_LOGIN = {
     'operatorPwd': '',
     'password': 'ucas',
-    'queryString': 'wlanuserip%253D0bc386d9e643d188b011a0d00c9b5c40%2526wlanacname%253D\
-    5fcbc245a7ffdfa4%2526ssid%253D%2526nasip%253D2c0716b583c8ac3cbd7567a84cfde5a8%\
-    2526mac%253D53ba540bde596b811a6d5617a86fa028%2526t%253Dwireless-v2%\
-    2526url%253D2c0328164651e2b4f13b933ddf36628bea622dedcc302b30',
+    'queryString': 'wlanuserip%253D0bc386d9e643d188b011a0d00c9b5c40%2526wlanacname%253D'
+    + '5fcbc245a7ffdfa4%2526ssid%253D%2526nasip%253D2c0716b583c8ac3cbd7567a84cfde5a8%'
+    + '2526mac%253D53ba540bde596b811a6d5617a86fa028%2526t%253Dwireless-v2%'
+    + '2526url%253D2c0328164651e2b4f13b933ddf36628bea622dedcc302b30',
     'service': '',
     'userId': '',
     'validcode': ''
@@ -32,8 +32,8 @@ DATA = {
     'userName': ''
 }
 HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\
-    (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586'
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+    + '(KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586'
 }
 
 

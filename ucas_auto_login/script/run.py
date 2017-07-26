@@ -31,6 +31,7 @@ def status_change(_login, _user='', _flow=''):
     STATUS.USER = _user
     STATUS.FLOW = _flow
 
+
 def get_name_list(filename):
     '从文件获取所有可登陆用户列表'
     try:
@@ -50,7 +51,9 @@ def login(user_id):
         url = BASE_URL + 'login'
         POSTDATA_LOGIN['userId'] = user_id
         response = requests.post(
-            url=url, data=POSTDATA_LOGIN, timeout=TIME_OUT, headers=HEADERS).json()
+            url=url, data=POSTDATA_LOGIN, timeout=TIME_OUT, headers=HEADERS)
+        response.encoding = 'utf-8'
+        response = response.json()
         DATA['result'] = response.get('result')
         if DATA['result'] == 'success':
             DATA['userIndex'] = response.get('userIndex')
@@ -97,8 +100,8 @@ def keep_alive(user_index):
     try:
         url = BASE_URL + 'keepalive'
         POSTDATA['userIndex'] = user_index
-        if requests.post(url=url, data=POSTDATA, timeout=TIME_OUT, headers=HEADERS)\
-                .json().get('result') == "success":
+        response = requests.post(url=url, data=POSTDATA, timeout=TIME_OUT, headers=HEADERS).json()
+        if response.get('result') == "success":
             return KEEP_ALIVE_SUCCESS
         else:
             raise NotImplementedError()
@@ -120,7 +123,9 @@ def test_online(user_index):
         url = BASE_URL + 'getOnlineUserInfo'
         POSTDATA['userIndex'] = user_index
         response = requests.get(url=url, headers=HEADERS,
-                                timeout=TIME_OUT).json()
+                                timeout=TIME_OUT)
+        response.encoding = 'utf-8'
+        response = response.json()
         result = response.get('result')
         if result == 'success':
             for key, _ in DATA.items():
@@ -193,6 +198,7 @@ def main():
                     LOG.info('切换用户')
 
     STATUS.RUN = False
+
 
 if __name__ == '__main__':
     main()

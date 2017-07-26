@@ -2,8 +2,9 @@
 import os
 import sys
 import shutil
-
+import parallel as pl
 from run import login, logout, get_name_list
+from run import main as auto_login
 from base import clear, store_data, DATA, EXCEPTIONS, POSTDATA, PATH, LOG, STATUS
 
 
@@ -103,6 +104,8 @@ def choose(num, out_label):
 
 
 def update(out_label='fast'):
+    pl.kill_thread(name='auto_login')
+    STATUS.RUN = False
     os.chdir(os.path.join(PATH, 'src'))
     try:
         init()
@@ -140,6 +143,8 @@ def update(out_label='fast'):
     STATUS.UPDATE = None
     STATUS.UPDATE_ALL = 0
     STATUS.UPDATE_NOW = 0
+    pl.run_thread([(auto_login, ())], name='auto_run', is_lock=False)
+    STATUS.RUN = True
 
 
 def main():
