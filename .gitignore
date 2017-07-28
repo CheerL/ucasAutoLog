@@ -7,6 +7,6 @@ icon/*
 .vscode/*
 dist/*
 build/*
-ucas_auto_login_win_release.exe
+ucas_auto_login_windows_release.exe
 *.spec
 *.Ink
