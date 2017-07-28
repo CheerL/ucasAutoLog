@@ -1,5 +1,3 @@
-*.exe
-*.bat
 log
 icon/*
 *.ini
@@ -9,3 +7,4 @@ icon/*
 .vscode/*
 dist/*
 build/*
+ucas_auto_login_win_release.exe
