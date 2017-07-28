@@ -8,3 +8,5 @@ icon/*
 dist/*
 build/*
 ucas_auto_login_win_release.exe
+*.spec
+*.Ink
