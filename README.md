@@ -21,9 +21,13 @@
 
 ### Windows客户端
 
-[点击下载](https://github.com/CheerL/ucasAutoLog/releases/download/1.0.0/ucas_auto_login_windows_release.exe)
+[点击下载](https://github.com/CheerL/ucasAutoLog/releases/download/1.1.0/ucas_auto_login_win_release.exe)
 
-### Mac及其他系统客户端
+### Mac客户端
+
+[点击下载](https://github.com/CheerL/ucasAutoLog/releases/download/1.1.0/ucas_auto_login_mac_release.dmg)
+
+### 其他系统客户端
 
 开发中
 

@@ -8,7 +8,7 @@ from PyQt5.QtGui import QIcon
 from ui.main_ui import Ui_MainWindow
 from ui.dlg_ui import Ui_Dialog
 from ui.pro_ui import Ui_Dialog as Ui_pro
-from base import PATH, STATUS
+from base import PATH, STATUS, SYSTEM
 from run import main as auto_login
 from list_update import update
 
@@ -16,17 +16,21 @@ from list_update import update
 class Main_window(QMainWindow):
     def __init__(self):
         super(Main_window, self).__init__()
-        self.icon_path = os.path.join(PATH, 'script', 'ui', 'icon.ico')
         self.new = Ui_MainWindow()
         self.new.setupUi(self)
         STATUS.GUI = True
         STATUS.MAIN = self
-        self.setWindowIcon(QIcon(self.icon_path))
         self.new.user_info_table.setColumnWidth(0, 180)
         self.new.user_info_table.setColumnWidth(1, 150)
         self.user_info_table_update()
         self.info_update()
-        self.tray_icon = TrayIcon(self, self.icon_path)
+
+        if SYSTEM == 'Windows':
+            self.icon_path = os.path.join(PATH, 'src', 'icon', 'icon.ico')
+            self.setWindowIcon(QIcon(self.icon_path))
+            self.tray_icon = TrayIcon(self, self.icon_path)
+        else:
+            self.new.pushButton.hide()
 
     def run_auto_login(self):
         STATUS.RUN = True
