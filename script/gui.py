@@ -25,7 +25,7 @@ class Main_window(QMainWindow):
         self.user_info_table_update()
         self.info_update()
 
-        if SYSTEM == 'Windows':
+        if SYSTEM in ['Windows', 'Linux']:
             self.icon_path = os.path.join(PATH, 'src', 'icon', 'icon.ico')
             self.setWindowIcon(QIcon(self.icon_path))
             self.tray_icon = TrayIcon(self, self.icon_path)
@@ -72,8 +72,7 @@ class Main_window(QMainWindow):
         QMessageBox.information(self, title, msg, QMessageBox.Yes)
 
     def minimize(self):
-        if self.isVisible:
-            self.hide()
+        self.tray_icon.show_or_hide()
 
 
 class Update_dlg(QWidget):
@@ -150,23 +149,29 @@ class TrayIcon(QSystemTrayIcon):
         "设计托盘的菜单，这里我实现了一个二级菜单"
         self.menu = QMenu()
         self.quitAction = QAction("退出", self, triggered=self.quit)
+        self.show_or_hide_Action = QAction("隐藏", self, triggered=self.show_or_hide)
         self.menu.addAction(self.quitAction)
+        self.menu.addAction(self.show_or_hide_Action)
         self.setContextMenu(self.menu)
 
     def iconClied(self, reason):
         "鼠标点击icon传递的信号会带有一个整形的值，1是表示单击右键，2是双击，3是单击左键，4是用鼠标中键点击"
         if reason == 2 or reason == 3:
-            print(type(reason))
-            pw = self.parent()
-            if pw.isVisible():
-                pw.hide()
-            else:
-                pw.show()
+            self.show_or_hide()
 
     def quit(self):
         "保险起见，为了完整的退出"
         self.setVisible(False)
         self.parent().close()
+
+    def show_or_hide(self):
+        pw = self.parent()
+        if pw.isVisible():
+            pw.hide()
+            self.show_or_hide_Action.setText('显示')
+        else:
+            pw.show()
+            self.show_or_hide_Action.setText('隐藏')
 
 def main():
     app = QApplication(sys.argv)

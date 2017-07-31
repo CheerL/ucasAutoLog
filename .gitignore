@@ -7,7 +7,8 @@ icon/*
 .vscode/*
 dist/*
 build/*
-ucas_auto_login_win_release.exe
-ucas_auto_login_mac_release.dmg
 *.spec
 *.Ink
+ucas_auto_login_win_release.exe
+ucas_auto_login_mac_release.dmg
+ucas_auto_login_ubuntu_release.deb
