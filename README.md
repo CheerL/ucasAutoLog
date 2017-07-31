@@ -17,15 +17,19 @@
 
 ## 下载使用
 
-你可以直接运行脚本，或下载对应你系统的客户端（目前只有Windows）
+你可以直接运行脚本，或下载对应你系统的客户端
 
 ### Windows客户端
 
-[点击下载](https://github.com/CheerL/ucasAutoLog/releases/download/1.1.0/ucas_auto_login_win_release.exe)
+[点击下载](https://github.com/CheerL/ucasAutoLog/releases/download/1.2.0/ucas_auto_login_win_release.exe)
 
 ### Mac客户端
 
-[点击下载](https://github.com/CheerL/ucasAutoLog/releases/download/1.1.0/ucas_auto_login_mac_release.dmg)
+[点击下载](https://github.com/CheerL/ucasAutoLog/releases/download/1.2.0/ucas_auto_login_mac_release.dmg)
+
+### Ubuntu客户端
+
+[点击下载](https://github.com/CheerL/ucasAutoLog/releases/download/1.2.0/ucas_auto_login_ubuntu_release.deb)
 
 ### 其他系统客户端
 
