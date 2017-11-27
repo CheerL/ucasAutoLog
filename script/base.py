@@ -16,6 +16,7 @@ EXCEPTIONS = (
 )
 POSTDATA_LOGIN = {
     'operatorPwd': '',
+    'operatorUserId': '',
     'password': 'ucas',
     'queryString': 'wlanuserip%253D0bc386d9e643d188b011a0d00c9b5c40%2526wlanacname%253D'
     + '5fcbc245a7ffdfa4%2526ssid%253D%2526nasip%253D2c0716b583c8ac3cbd7567a84cfde5a8%'
@@ -45,11 +46,15 @@ def get_logger(name, log_path):
         '[%(asctime)s] "%(levelname)s"  %(message)s',
         '%d/%b/%Y %H:%M:%S'
     )
-    handle = logging.FileHandler(log_path)
-    handle.setLevel(logging.INFO)
-    handle.setFormatter(formatter)
     logger = logging.getLogger(name)
+    handle = logging.FileHandler(log_path)
+    stream = logging.StreamHandler()
+    handle.setLevel(logging.INFO)
+    stream.setLevel(logging.INFO)
+    handle.setFormatter(formatter)
+    stream.setFormatter(formatter)
     logger.addHandler(handle)
+    logger.addHandler(stream)
     return logger
 
 
@@ -142,4 +147,3 @@ class Status(object):
 
 
 STATUS = Status()
-LOG = get_logger('auto_login', LOG_PATH)

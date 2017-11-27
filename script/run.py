@@ -6,7 +6,10 @@ import random
 import requests
 
 from base import POSTDATA_LOGIN, POSTDATA, PATH, DATA, HEADERS, BASE_URL, TIME_OUT, EXCEPTIONS
-from base import STATUS, LOG, clear
+from base import STATUS, clear
+from logger import Logger
+
+LOG = Logger('auto_login')
 
 
 # 登陆常量
@@ -61,6 +64,7 @@ def login(user_id):
                 if test_online(DATA['userIndex']) is ONLINE:
                     break
             else:
+                LOG.warning('{} 尝试登录成功但未获得返回数据, 登录失败'.format(user_id))
                 logout(POSTDATA)
                 return LOGIN_FAIL
 
@@ -68,6 +72,7 @@ def login(user_id):
                      (DATA['userName'], DATA['maxFlow']))
             return LOGIN_SUCCESS
         else:
+            LOG.warning('{} 登录失败'.format(user_id))
             return LOGIN_FAIL
     except EXCEPTIONS as error:
         DATA['result'] = 'error'
@@ -88,7 +93,7 @@ def logout(post_data):
             return LOGOUT_FAIL
         else:
             LOG.info('%s下线' % DATA['userName'])
-        return LOGOUT_SUCCESS
+            return LOGOUT_SUCCESS
     except EXCEPTIONS as error:
         LOG.error(error)
         LOG.error('未正常离线')
@@ -115,7 +120,7 @@ def keep_alive(user_index):
 def test_online(user_index):
     '测试是否在线'
     if not user_index:
-        LOG.info('用户不存在')
+        LOG.info('没有指定user index, 用户不在线')
         status_change(False)
         return NO_USER
 
@@ -173,8 +178,9 @@ def main():
     name_list = get_name_list('src/NameList.txt')
 
     while name_list:
-        time.sleep(10)
+        # time.sleep(10)
         test_result = test_online(DATA['userIndex'])
+        print(test_result)
         if test_result is ONLINE or test_result is WAIT:
             pass
         elif test_result is NET_ERROR:

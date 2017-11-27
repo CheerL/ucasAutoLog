@@ -5,8 +5,11 @@ import shutil
 import parallel as pl
 from run import login, logout, get_name_list
 from run import main as auto_login
-from base import clear, store_data, DATA, EXCEPTIONS, POSTDATA, PATH, LOG, STATUS
+from base import clear, store_data, DATA, EXCEPTIONS, POSTDATA, PATH, STATUS
+from logger import Logger
 
+LOG = Logger('auto_login')
+LOG.remove_stream_handler()
 
 def init(success=True):
     '初始化几个文件'
