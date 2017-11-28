@@ -72,7 +72,7 @@ def login(user_id):
                      (DATA['userName'], DATA['maxFlow']))
             return LOGIN_SUCCESS
         else:
-            LOG.warning('{} 登录失败'.format(user_id))
+            LOG.warning('{} 登录失败, {}'.format(user_id, response.get('message')))
             return LOGIN_FAIL
     except EXCEPTIONS as error:
         DATA['result'] = 'error'
