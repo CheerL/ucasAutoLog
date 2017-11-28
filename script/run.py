@@ -178,9 +178,9 @@ def main():
     name_list = get_name_list('src/NameList.txt')
 
     while name_list:
-        # time.sleep(10)
+        time.sleep(10)
         test_result = test_online(DATA['userIndex'])
-        print(test_result)
+        # print(test_result)
         if test_result is ONLINE or test_result is WAIT:
             pass
         elif test_result is NET_ERROR:
