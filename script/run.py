@@ -76,6 +76,8 @@ def login(user_id, check=True):
                         (DATA['userName'], DATA['maxFlow']))
                 return LOGIN_SUCCESS
             else:
+                DATA['userName'] = user_id
+                DATA['maxFlow'] = ' '
                 LOG.info('目前登陆用户为%s' % user_id)
                 return LOGIN_SUCCESS
         else:

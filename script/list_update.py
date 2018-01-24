@@ -108,6 +108,7 @@ def choose(num, out_label):
 
 def update(out_label='fast'):
     pl.kill_thread(name='auto_login')
+    logout(POSTDATA)
     STATUS.RUN = False
     os.chdir(os.path.join(PATH, 'src'))
     try:
@@ -146,14 +147,11 @@ def update(out_label='fast'):
     STATUS.UPDATE = None
     STATUS.UPDATE_ALL = 0
     STATUS.UPDATE_NOW = 0
-    pl.run_thread([(auto_login, ())], name='auto_run', is_lock=False)
-    STATUS.RUN = True
 
 
 def main():
     '主函数'
     os.chdir(os.path.join(PATH, 'src'))
-    logout(POSTDATA)
     try:
         print('是否跳过流量测试?')
         print('一般在你最近已经测试过, 且在该文件夹下有一个非空的名为"success.txt"的文件时选择跳过')
