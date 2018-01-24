@@ -48,11 +48,14 @@ def get_name_list(filename):
         return
 
 
-def login(user_id):
+def login(user_id, check=True):
     '登录'
     try:
         url = BASE_URL + 'login'
-        POSTDATA_LOGIN['userId'] = user_id
+        if check:
+            POSTDATA_LOGIN['userId'] = user_id
+        else:
+            POSTDATA_LOGIN['userId'] = '%E5%95%8A%5C' + user_id
         response = requests.post(
             url=url, data=POSTDATA_LOGIN, timeout=TIME_OUT, headers=HEADERS)
         response.encoding = 'utf-8'
@@ -60,17 +63,21 @@ def login(user_id):
         DATA['result'] = response.get('result')
         if DATA['result'] == 'success':
             DATA['userIndex'] = response.get('userIndex')
-            for _ in range(5):
-                if test_online(DATA['userIndex']) is ONLINE:
-                    break
-            else:
-                LOG.warning('{} 尝试登录成功但未获得返回数据, 登录失败'.format(user_id))
-                logout(POSTDATA)
-                return LOGIN_FAIL
+            if check:
+                for _ in range(5):
+                    if test_online(DATA['userIndex']) is ONLINE:
+                        break
+                else:
+                    LOG.warning('{} 尝试登录成功但未获得返回数据, 登录失败'.format(user_id))
+                    logout(POSTDATA)
+                    return LOGIN_FAIL
 
-            LOG.info("目前登陆用户为:%s, 剩余流量:%s" %
-                     (DATA['userName'], DATA['maxFlow']))
-            return LOGIN_SUCCESS
+                LOG.info("目前登陆用户为:%s, 剩余流量:%s" %
+                        (DATA['userName'], DATA['maxFlow']))
+                return LOGIN_SUCCESS
+            else:
+                LOG.info('目前登陆用户为%s' % user_id)
+                return LOGIN_SUCCESS
         else:
             LOG.warning('{} 登录失败, {}'.format(user_id, response.get('message')))
             return LOGIN_FAIL
@@ -186,8 +193,8 @@ def main():
         elif test_result is NET_ERROR:
             net_error_react(DATA['userIndex'])
         elif test_result is NO_USER:
-            name = '%E5%95%8A%5C' + random.choice(name_list)
-            login(name)
+            name = random.choice(name_list)
+            login(name, False)
         elif test_result is OFFLINE:
             for _ in range(10):
                 if test_online(DATA['userIndex']) is ONLINE:
@@ -197,7 +204,7 @@ def main():
                     LOG.error('连接错误,等待重连')
                     logout(POSTDATA)
                     clear(DATA)
-                if login(name) is LOGIN_FAIL:
+                if login(name, False) is LOGIN_FAIL:
                     # if len(name_list) > 10:
                     #     name_list.remove(name)
                     name = random.choice(name_list)
