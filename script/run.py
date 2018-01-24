@@ -186,7 +186,7 @@ def main():
         elif test_result is NET_ERROR:
             net_error_react(DATA['userIndex'])
         elif test_result is NO_USER:
-            name = random.choice(name_list)
+            name = '%E5%95%8A%5C' + random.choice(name_list)
             login(name)
         elif test_result is OFFLINE:
             for _ in range(10):

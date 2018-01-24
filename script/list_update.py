@@ -153,7 +153,7 @@ def update(out_label='fast'):
 def main():
     '主函数'
     os.chdir(os.path.join(PATH, 'src'))
-
+    logout(POSTDATA)
     try:
         print('是否跳过流量测试?')
         print('一般在你最近已经测试过, 且在该文件夹下有一个非空的名为"success.txt"的文件时选择跳过')
@@ -178,18 +178,18 @@ def main():
         sys.exit()
 
     success_file = 'result/success.%s.txt' % (out_label)
-    print('测试完毕, 想要筛选剩余流量大于多少MB的账号?')
-    print('例如: 想找剩余流量大于10000MB的, 就输入10000, 按回车即可')
-    try:
-        num = int(input('清输入一个整数, 按回车确认, 不要输入任何其他字符\n'))
-    except EXCEPTIONS:
-        print('输入错误, 默认筛选0')
-        num = 0
+    #print('测试完毕, 想要筛选剩余流量大于多少MB的账号?')
+    #print('例如: 想找剩余流量大于10000MB的, 就输入10000, 按回车即可')
+    #try:
+    #    num = int(input('清输入一个整数, 按回车确认, 不要输入任何其他字符\n'))
+    #except EXCEPTIONS:
+    #    print('输入错误, 默认筛选0')
+    #    num = 0
 
-    file_name = choose(num, out_label)
+    file_name = choose(0, out_label)
     if not file_name:
         sys.exit()
-    print('筛选完毕')
+    #print('筛选完毕')
 
     if os.path.isfile('error.txt'):
         os.remove('error.txt')
@@ -207,7 +207,7 @@ def main():
     os.remove(success_file)
 
     print('更新完毕')
-    input('按任意键退出')
+    #input('按任意键退出')
 
 
 if __name__ == '__main__':

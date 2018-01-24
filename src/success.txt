@@ -1,9 +1,1 @@
-wunaiqin	success	15011.51MB
-baiyilong	success	7878.34MB
-yangyuanhe	success	1554.46MB
-xuming	success	15360.00MB
-zhenghui	success	272.69MB
-fantao	success	45.58MB
-201418016537056	success	10240.00MB
-2014E8011961077	success	10240.00MB
-201118017515013	success	4732.60MB
+chenjingbo	success	10511.04MB
